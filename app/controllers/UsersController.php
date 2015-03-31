@@ -10,6 +10,12 @@
 class UsersController extends Controller
 {
 
+    public function index()
+    {
+        $users =  User::all();
+
+        return View::make('users.index', compact('users'));
+    }
     /**
      * Displays the form for account creation
      *

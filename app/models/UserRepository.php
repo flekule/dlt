@@ -19,10 +19,15 @@ class UserRepository
      */
     public function signup($input)
     {
+        //$user = new User;
         $user = new User;
 
         $user->email    = array_get($input, 'email');
         $user->password = array_get($input, 'password');
+        $user->firstname = array_get($input, 'firstname');
+        $user->surname = array_get($input, 'surname');
+        $user->IMEI = array_get($input, 'imei');
+
 
         // The password confirmation will be removed from model
         // before saving. This field will be used in Ardent's

@@ -14,8 +14,8 @@ class TowersTableSeeder extends Seeder {
 			Tower::create([
                 'cell' => str_pad($index, 4, 0, STR_PAD_LEFT),
                 'name' => $faker->colorName,
-                'latitude' => $faker->numberBetween(10, 100) . $faker->numberBetween(10000, 99999),
-                'longitude' => $faker->numberBetween(10, 100) . $faker->numberBetween(10000, 99999),
+                'latitude' => $faker->latitude,
+                'longitude' => $faker->longitude,
 			]);
 		}
 	}

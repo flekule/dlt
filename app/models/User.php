@@ -7,7 +7,7 @@ use Illuminate\Auth\Reminders\RemindableInterface;
 use Zizaco\Confide\ConfideUser;
 use Zizaco\Confide\ConfideUserInterface;
 
-class User extends \Eloquent implements ConfideUserInterface {
+class User extends Eloquent implements ConfideUserInterface {
 
 	use ConfideUser;
 
@@ -24,5 +24,8 @@ class User extends \Eloquent implements ConfideUserInterface {
 	 * @var array
 	 */
 	protected $hidden = array('password', 'remember_token');
+
+
+//    protected $fillables = ['email', ''];
 
 }

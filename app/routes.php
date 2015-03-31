@@ -15,12 +15,32 @@ Route::get('/', function()
 {
 	return View::make('hello');
 });
+
+
+Route::get('testing', function(){
+
+    $t = Tower::all();
+
+    user::create([
+       'firstname' => Input::get('name'),
+        'surname' => Input::get('surname'),
+        'password' => Input::get('password'),
+        'email' => Input::get('email'),
+        'IMEI' => Input::get('IMEI'),
+
+    ]);
+
+    dd($t->toJson());
+});
+
+
 //
 Route::resource('Towers', 'TowersController');
 
 // Confide routes
 Route::get('users/create', 'UsersController@create');
 Route::post('users', 'UsersController@store');
+Route::get('users', 'UsersController@index');
 Route::get('users/login', 'UsersController@login');
 Route::post('users/login', 'UsersController@doLogin');
 Route::get('users/confirm/{code}', 'UsersController@confirm');
