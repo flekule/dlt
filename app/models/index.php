@@ -15,9 +15,12 @@
 /**
  * check for POST request   && $_GET['tag'] != '')
  */
-if (isset($_GET['tag']))  {
+
+$con=mysqli_connect("localhost","root","Xerxes641602","cdcol");
+
+if (isset($_POST['tag'])&& $_POST['tag'] != '')  {
     // get tag
-    $tag = $_GET['tag'];
+    $tag = $_POST['tag'];
 
     // include db handler
     require_once 'include/DB_Functions.php';
@@ -29,8 +32,9 @@ if (isset($_GET['tag']))  {
     // check for tag type
     if ($tag == 'login') {
         // Request type is check Login
-        $email = $_GET['email'];
-        $password = $_GET['password'];
+
+        $email = $_POST['email'];
+        $password = $_POST['password'];
 
         // check for user
         $user = $db->getUserByEmailAndPassword($email, $password);

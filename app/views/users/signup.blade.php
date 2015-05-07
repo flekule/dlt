@@ -1,14 +1,29 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Laravel PHP Framework</title>
+    <style>
+        body {
+            margin:0;
+            font-family:'Lato', sans-serif;
+            text-align:left;
+            color: #000000;
+            background: #DADADA;
+            left: 50%;
+            top: 50%;
+        }
+    </style>
+</head>
+<body>
+
 <form method="POST" action="{{{ URL::to('users') }}}" accept-charset="UTF-8">
     <input type="hidden" name="_token" value="{{{ Session::getToken() }}}">
     <fieldset>
         @if (Cache::remember('username_in_confide', 5, function() {
             return Schema::hasColumn(Config::get('auth.table'), 'username');
         }))
-            <div class="form-group">
-                <label for="username">{{{ Lang::get('confide::confide.username') }}}</label>
-                <input class="form-control" placeholder="{{{ Lang::get('confide::confide.username') }}}" type="text"
-                       name="username" id="username" value="{{{ Input::old('username') }}}">
-            </div>
+
         @endif
 
             <div class="form-group">
@@ -69,3 +84,5 @@
 
     </fieldset>
 </form>
+</body>
+</html>

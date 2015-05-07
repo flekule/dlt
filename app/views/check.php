@@ -9,7 +9,7 @@ $hostname_localhost ="localhost";
 $database_localhost ="cdcol";
 $username_localhost ="root";
 $password_localhost ="Xerxes641602";
-$localhost = mysql_connect($hostname_localhost,$username_localhost,$password_localhost)
+$localhost = mysql_connect($hostname_localhost, $username_localhost,$password_localhost)
 or
 trigger_error(mysql_error(),E_USER_ERROR);
 
@@ -22,9 +22,9 @@ $password = isset($_POST['password'])?$_POST['password']:
 $query_search = "select * from users where email = '".$email."' AND password = '".$password. "'";
 $query_exec = mysql_query($query_search) or die(mysql_error());
 $rows = mysql_num_rows($query_exec);
-//echo $rows;
+echo $rows;
 if($rows == 0) {
-    echo "No Such User Found";
+   echo "No Such User Found";
 }
 else  {
     echo "User Found";

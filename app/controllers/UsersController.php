@@ -200,6 +200,6 @@ class UsersController extends Controller
     {
         Confide::logout();
 
-        return Redirect::to('/');
+        return Redirect::to('http://localhost:8000/users/login');
     }
 }
