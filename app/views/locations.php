@@ -8,17 +8,19 @@
  */
 // error_reporting(E_ALL ^ E_NOTICE);
 $con=mysqli_connect("localhost","root","Xerxes641602","cdcol");
+
 if (mysqli_connect_error($con))
 {
     echo "Failed to connect to MySQL: " . mysqli_connect_errno();_connect_error();
 }
-if (isset($_POST['lat'], $_POST['lon'])) {
+if (isset($_POST['lat'], $_POST['lon'], $_POST['email'])) {
 
     $latitude = $_POST['lat'];
     $longitude = $_POST['lon'];
+    $user_id = $_POST['email'];
 
 
-    $sql = "INSERT INTO locations (latitude, longitude) VALUES({$latitude}, {$longitude})";
+    $sql = "INSERT INTO locations (latitude, longitude, email) VALUES($latitude, $longitude, $user_id)";
 
     $result = mysqli_query($con, $sql);
 

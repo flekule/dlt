@@ -2,17 +2,15 @@
 
 require 'config.php';
 
-try {
 
-    $db = new PDO($dsn, $username, $password);
-    $db->setAttribute( PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION );
+$query = mysql_query("SELECT * FROM locations");
+while ($row = mysql_fetch_array($query)){
+    $user_id=$row['user_id'];
+    $latitude=$row['latitude'];
+    $longitude=$row['longitude'];
 
-    $sth = $db->query("SELECT * FROM locations");
-    $locations = $sth->fetchAll();
-
-    echo json_encode( $locations );
-
-} catch (Exception $e) {
-    echo $e->getMessage();
+    echo ("addMarker($latitude, $longitude,'<b>$user_id</b>);\n");
 }
+
+
 ?>

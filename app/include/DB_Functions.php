@@ -29,10 +29,10 @@ class DB_Functions {
      */
     public function storeUser($firstname, $surname, $email, $password, $IMEI) {
         $uuid = uniqid('', true);
-        $hash = $this->hashSSHA($password);
-        $encrypted_password = $hash["encrypted"]; // encrypted password
-        $salt = $hash["salt"]; // salt
-        $result = mysql_query("INSERT INTO users(unique_id, firstname, surname,  IMEI, email, encrypted_password, salt, created_at) VALUES('$uuid', '$firstname', '$surname' , '$IMEI' , '$email', '$encrypted_password', '$salt', NOW())");
+     //   $hash = $this->hashSSHA($password);
+      /*  $encrypted_password = $hash["encrypted"]; // encrypted password
+        $salt = $hash["salt"]; // salt*/
+        $result = mysql_query("INSERT INTO users(firstname, surname,  imei, email, password,  created_at) VALUES( '$firstname', '$surname' , '$IMEI' , '$email', '$password',  NOW())");
         // check for successful store
         if ($result) {
             // get user details
@@ -49,19 +49,20 @@ class DB_Functions {
      * Get user by email and password
      */
     public function getUserByEmailAndPassword($email, $password) {
-        $result = mysql_query("SELECT * FROM users WHERE email = '$email'") or die(mysql_error());
+        $result = mysql_query("SELECT * FROM users WHERE email = '$email' AND password = '$password'") or die(mysql_error());
         // check for result
         $no_of_rows = mysql_num_rows($result);
         if ($no_of_rows > 0) {
             $result = mysql_fetch_array($result);
-            $salt = $result['salt'];
-            $encrypted_password = $result['encrypted_password'];
-            $hash = $this->checkhashSSHA($salt, $password);
-            // check for password equality
-            if ($encrypted_password == $hash) {
-                // user authentication details are correct
-                return $result;
-            }
+            /* $salt = $result['salt'];
+             $encrypted_password = $result['encrypted_password'];
+             $hash = $this->checkhashSSHA($salt, $password);*/
+             // check for password equality
+           /*  if ($result == $password) {
+                 // user authentication details are correct*/
+                 return $result;
+
+            return $result;
         } else {
             // user not found
             return false;
@@ -71,8 +72,8 @@ class DB_Functions {
     /**
      * Check user is existed or not
      */
-    public function isUserExisted($email) {
-        $result = mysql_query("SELECT email from users WHERE email = '$email'");
+    public function isUserExisted($email, $password) {
+        $result = mysql_query("SELECT email from users WHERE email = '$email' AND password = '$password'");
         $no_of_rows = mysql_num_rows($result);
         if ($no_of_rows > 0) {
             // user existed

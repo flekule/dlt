@@ -5,9 +5,13 @@
  * Date: 5/6/2015
  * Time: 11:10 AM
  */
-$server     = 'localhost';
-$username   = 'root';
-$password   = 'Xerxes641602';
-$database   = 'cdcol';
 
-$dsn        = "mysql:host=$server;dbname=$database";
+$dbname            ='cdcol'; //Name of the database
+$dbuser            ='root'; //Username for the db
+$dbpass            ='Xerxes641602'; //Password for the db
+$dbserver        ='localhost'; //Name of the mysql server
+
+$dbcnx = mysql_connect ("$dbserver", "$dbuser", "$dbpass");
+mysql_select_db("$dbname") or die(mysql_error());
+?>
+

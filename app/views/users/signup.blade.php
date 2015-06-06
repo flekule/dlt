@@ -1,88 +1,88 @@
+@extends('users.layouts.default')
 <!doctype html>
 <html lang="en">
 <head>
+@include('users.includes.head')
     <meta charset="UTF-8">
-    <title>Laravel PHP Framework</title>
+    <title>Signup page</title>
+
     <style>
-        body {
-            margin:0;
-            font-family:'Lato', sans-serif;
-            text-align:left;
-            color: #000000;
-            background: #DADADA;
-            left: 50%;
-            top: 50%;
-        }
+
     </style>
 </head>
 <body>
 
+<div class="navbar-header">
+<ul class="nav navbar-nav">
+</ul>
+    </div>
+
+
+    </div>
+@section('content')
 <form method="POST" action="{{{ URL::to('users') }}}" accept-charset="UTF-8">
-    <input type="hidden" name="_token" value="{{{ Session::getToken() }}}">
+<?php
+
+    $dbhost = "localhost"; // this will ususally be 'localhost', but can sometimes differ
+    $dbname = "cdcol"; // the name of the database that you are going to use for this project
+    $dbuser = "root"; // the username that you created, or were given, to access your database
+    $dbpass = "Xerxes641602"; // the password that you created, or were given, to access your database
+
+    mysql_connect($dbhost, $dbuser, $dbpass) or die("MySQL Error: " . mysql_error());
+    mysql_select_db($dbname) or die("MySQL Error: " . mysql_error());
+    if(!empty($_POST['username']) && !empty($_POST['password']))
+    {
+        $username = mysql_real_escape_string($_POST['username']);
+        $password = mysql_real_escape_string($_POST['password']);
+        $email = mysql_real_escape_string($_POST['email']);
+
+        $checkusername = mysql_query("SELECT * FROM users WHERE firstname = '".$username."'");
+
+        if(mysql_num_rows($checkusername) == 1)
+        {
+            echo "<h1>Error</h1>";
+            echo "<p>Sorry, that username is taken. Please go back and try again.</p>";
+        }
+        else
+        {
+            $registerquery = mysql_query("INSERT INTO users (firstname, Password, email) VALUES('".$username."', '".$password."', '".$email."')");
+            if($registerquery)
+            {
+                echo "<h1>Success</h1>";
+               // echo "<p>Your account was successfully created. Please <a href=\"indexWeb.php\">click here to login</a>.</p>";
+            }
+            else
+            {
+                echo "<h1>Error</h1>";
+                echo "<p>Sorry, your registration failed. Please go back and try again.</p>";
+            }
+        }
+    }
+    else
+    {
+        ?>
+
+        <h1>Register</h1>
+
+        <p>Please enter your details below to register.</p>
+
+        <form method="post" action="register.php" name="registerform" id="registerform">
+            <fieldset>
+                <label for="username">Username:</label><input type="text" name="username" id="username" /><br />
+                <label for="password">Password:</label><input type="password" name="password" id="password" /><br />
+                <label for="email">Email Address:</label><input type="text" name="email" id="email" /><br />
+                <input type="submit" name="register" id="register" value="Register" />
+            </fieldset>
+        </form>
+
+    <?php
+    }
+    ?>
+
     <fieldset>
-        @if (Cache::remember('username_in_confide', 5, function() {
-            return Schema::hasColumn(Config::get('auth.table'), 'username');
-        }))
-
-        @endif
-
-            <div class="form-group">
-                <label for="firstname">{{{ ucwords('first Name') }}}
-                </label>
-                <input class="form-control" placeholder="{{{ ucfirst('first name') }}}" type="text"
-                       name="firstname" id="firstname" value="{{{ Input::old('firstname') }}}">
-            </div>
-
-            <div class="form-group">
-                <label for="surname">{{{ ucwords('surname') }}}
-                </label>
-                <input class="form-control" placeholder="{{{ ucfirst('surname') }}}" type="text"
-                       name="surname" id="surname" value="{{{ Input::old('surname') }}}">
-            </div>
-
-            <div class="form-group">
-            <label for="email">{{{ Lang::get('confide::confide.e_mail') }}}
-                <small>{{ Lang::get('confide::confide.signup.confirmation_required') }}</small>
-            </label>
-            <input class="form-control" placeholder="{{{ Lang::get('confide::confide.e_mail') }}}" type="text"
-                   name="email" id="email" value="{{{ Input::old('email') }}}">
-        </div>
-        <div class="form-group">
-            <label for="password">{{{ Lang::get('confide::confide.password') }}}</label>
-            <input class="form-control" placeholder="{{{ Lang::get('confide::confide.password') }}}" type="password"
-                   name="password" id="password">
-        </div>
-        <div class="form-group">
-            <label for="password_confirmation">{{{ Lang::get('confide::confide.password_confirmation') }}}</label>
-            <input class="form-control" placeholder="{{{ Lang::get('confide::confide.password_confirmation') }}}"
-                   type="password" name="password_confirmation" id="password_confirmation">
-        </div>
-
-        <div class="form-group">
-            <label for="imei">{{{ ucwords('imei') }}}
-            </label>
-            <input class="form-control" placeholder="{{{ ucfirst('Dial *#06# to get your imei') }}}" type="text"
-                   name="imei" id="imei" value="{{{ Input::old('imei') }}}">
-        </div>
-
-
-        @if (Session::get('error'))
-            <div class="alert alert-error alert-danger">
-                @if (is_array(Session::get('error')))
-                    {{ head(Session::get('error')) }}
-                @endif
-            </div>
-        @endif
-
-        @if (Session::get('notice'))
-            <div class="alert">{{ Session::get('notice') }}</div>
-        @endif
-
-        <div class="form-actions form-group">
-            <button type="submit" class="btn btn-primary">{{{ Lang::get('confide::confide.signup.submit') }}}</button>
-        </div>
 
     </fieldset>
 </form>
+@stop
 </body>
 </html>

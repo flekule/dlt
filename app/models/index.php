@@ -62,13 +62,13 @@ if (isset($_POST['tag'])&& $_POST['tag'] != '')  {
         $surname = $_POST['surname'];
         $email = $_POST['email'];
         $password = $_POST['password'];
-        $IMEI = $_POST['IMEI'];
+        $IMEI = $_POST['imei'];
 
         // check if user is already existed
-        if ($db->isUserExisted($email)) {
+        if ($db->isUserExisted($email,$password)) {
             // user is already existed - error response
             $response["error"] = TRUE;
-            $response["error_msg"] = "User already existed";
+            $response["error_msg"] = "User already exists";
             echo json_encode($response);
         } else {
             // store user
@@ -94,7 +94,7 @@ if (isset($_POST['tag'])&& $_POST['tag'] != '')  {
     } else {
         // user failed to store
         $response["error"] = TRUE;
-        $response["error_msg"] = "Unknow 'tag' value. It should be either 'login' or 'register'";
+        $response["error_msg"] = "Unknown 'tag' value. It should be either 'login' or 'register'";
         echo json_encode($response);
     }
 } else {

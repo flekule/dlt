@@ -1,22 +1,20 @@
+@extends('users.layouts.default')
 <!doctype html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
+@include('users.includes.head')
+   <meta http-equiv="content-type" content="text/html; charset=utf-8" />
     <title>Laravel PHP Framework</title>
     <style>
-        body {
-            margin:0;
-            font-family:'Lato', sans-serif;
-            text-align:left;
-            color: #000000;
-            background: #DADADA;
-            left: 50%;
-            top: 50%;
-        }
+
     </style>
 </head>
 <body>
+<div class="container">
 
+
+    </div>
+@section('content')
 <form role="form" method="POST" action="{{{ URL::to('/users/login') }}}" accept-charset="UTF-8">
     <input type="hidden" name="_token" value="{{{ Session::getToken() }}}">
     <fieldset>
@@ -50,4 +48,5 @@
         </div>
     </fieldset>
 </form>
+@stop
 </body>
